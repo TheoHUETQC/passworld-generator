@@ -22,9 +22,8 @@ It uses secure hashing (SHA-256) to generate repeatable, strong passwords from a
 
 ## 📁 Project Structure
 
-``` bash
-📂 password-generator/ 
-├── 📄 README.md ← This file 
+```
+📂 password-generator/
 ├── 🧠 main.py ← Console version (basic generator) 
 │ 
 ├── 📂 windows/ 
@@ -34,9 +33,11 @@ It uses secure hashing (SHA-256) to generate repeatable, strong passwords from a
 ├── 📂 android/ 
 │   └── 🤖 generateur_mdp_android.py ← GUI version for Android (in progress) 
 │ 
-└── 📂 logo/ 
-    ├── 🖼️ logo.png ← App icon (PNG) 
-    └── 🧊 logo.ico ← App icon for .exe (ICO)
+├── 📂 logo/ 
+│   ├── 🖼️ logo.png ← App icon (PNG) 
+│   └── 🧊 logo.ico ← App icon for .exe (ICO)  
+│ 
+└── 📄 README.md (This file)
 ```
 
 ---
@@ -99,11 +100,11 @@ new_mdp += str(CAR[i % N]) # the indices select a character for the new password
 ## ✅ Requirements
 
 - **Python 3.9+**
-- Standard libraries only: hashlib, tkinter (for GUI versions)
+- Standard libraries only: hashlib, tkinter (for windows GUI versions), kivy (for android)
 
 For GUI development:
 ```bash
-pip install pillow
+pip install hashlib tkinter kivy
 ```
 
 ---
@@ -112,10 +113,10 @@ pip install pillow
 
 The naming follows this logic:
 
--generateur_mdp23-2.exe
+- generateur_mdp23-2.exe
 
-    → Generates 23-character passwords
-    → Version 2 of the app
+    - Generates 23-character passwords
+    - Version 2 of the app
 
 Future versions (with different lengths or improvements) will follow this convention.
 
