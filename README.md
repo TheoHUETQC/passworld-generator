@@ -4,6 +4,7 @@ This project is a **deterministic password generator** written in **Python**, of
 
 It uses secure hashing (SHA-256) to generate repeatable, strong passwords from a unique **identifier** and a **master password**. This approach ensures you always get the same password for the same inputs—without needing to store anything.
 
+![logo](logo/logo.ico)
 ---
 
 ## ⚙️ Features
@@ -33,9 +34,9 @@ It uses secure hashing (SHA-256) to generate repeatable, strong passwords from a
 ├── 📂 android/ 
 │   └── 🤖 generateur_mdp_android.py ← GUI version for Android (in progress) 
 │ 
-├── 📂 logo/ 
-│   ├── 🖼️ logo.png ← App icon (PNG) 
-│   └── 🧊 logo.ico ← App icon for .exe (ICO)
+└── 📂 logo/ 
+    ├── 🖼️ logo.png ← App icon (PNG) 
+    └── 🧊 logo.ico ← App icon for .exe (ICO)
 ```
 
 ---
@@ -84,8 +85,11 @@ The Android version is still under development.
 ## 🧪 Behind the Scenes
 
 - Passwords are generated using:
-```bash
-hashlib.sha256((identifier + master_password).encode()).hexdigest()
+```py
+int(hashlib.sha256(value.encode('utf-8')).hexdigest(), 16) # hash for the value = identifier, master_password
+# Some mathematical operations between the two
+tab_mdp = [int(str(hash_mdp)[i:i+2]) ... ] # this number becomes a hint list
+new_mdp += str(CAR[i % N]) # the indices select a character for the new password
 ```
 - Then, the output hash is trimmed/encoded to 23 characters using a deterministic slicing strategy, ensuring high entropy.
 - The same inputs will **always return the same password**, enabling password retrieval **without storage**.
