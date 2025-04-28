@@ -2,35 +2,42 @@ import tkinter as tk
 from tkinter import messagebox
 import hashlib
 
-MDP_SIZE = 23
-CAR = list('!@#$%^&*()1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')  # len = 72
-N = len(CAR)
-error = []
+MDP_SIZE = 23 # taille du mot de passe final que l'on souhaite
+CAR = list('!@#$%^&*()1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz') # liste de caractère qui composera le mot de passe generé
+N = len(CAR) # len = 72 
+error = [] # liste qui stock les erreurs
 
-def deterministic_hash(value):
+def deterministic_hash(value) : 
+    """Hashage : transforme une chaine de caractère en entier"""
     return int(hashlib.sha256(value.encode('utf-8')).hexdigest(), 16)
 
 def generate_password():
+    """géneration du mot de passe de taille MDP_SIZE"""
+    # entrée de l'utilisateur
     id = entry_identifiant.get().strip()
     password = entry_mdp.get().strip()
 
-    if not id or not password:
+    if not id or not password : # si il manque le mdp ou id
         messagebox.showerror("Erreur", "Identifier or password missing")
         return
-    elif id == "Théo" and password == "HUET" :
+    elif id == "Théo" and password == "HUET" : # id et mdp a rentrer pour voir la liste d'erreur
         messagebox.showerror("Erreur list : ", error)
         return
     
+    # hashage
     hash_id = abs(deterministic_hash(id))
     hash_pw = abs(deterministic_hash(password))
 
+    # manipulation de l'id et le mdp hashés pour créer un grand entier unique
     hash_pw = hash_pw * 2 + hash_id ** 2
     while len(str(abs(hash_pw))) < MDP_SIZE * 10 :
         hash_pw = hash_pw * 2 + hash_id ** 2
-
-    tab_pw = [int(str(hash_pw)[i:i+2]) for i in range(len(str(hash_pw))-(MDP_SIZE*2), len(str(hash_pw)), 2)]
-    new_pw = ""
     
+    # utilisation du résultat pour créer une liste d'indice de taille 2 : 24908273 -> [24, 90, 82, 73]
+    tab_pw = [int(str(hash_pw)[i:i+2]) for i in range(len(str(hash_pw))-(MDP_SIZE*2), len(str(hash_pw)), 2)]
+    
+    # création du nouveau mot de passe en utilisant la liste d'indice pour piocher des caractères dans la liste CAR
+    new_pw = ""
     for i in tab_pw:
         new_pw += str(CAR[(i % N)])
 
